@@ -1,0 +1,4 @@
+# Rule ID | Condition (Python code) | Action (Python code) | HOW Explanation
+R_BMI | wm["weight"] is not None and wm["height"] is not None and wm["bmi"] is None | wm["bmi"] = round(wm["weight"] / (wm["height"] ** 2), 1) | Calculated BMI based on inputs.
+R_DEFICIT | wm["bmi"] is not None and wm["bmi"] >= 25.0 and wm["diet_goal"] is None | wm["diet_goal"] = "Calorie Deficit Diet" | BMI >= 25: Recommended Calorie Deficit.
+R_MAINTAIN | wm["bmi"] is not None and wm["bmi"] < 25.0 and wm["diet_goal"] is None | wm["diet_goal"] = "Calorie Maintenance Diet" | BMI < 25: Recommended Calorie Maintenance.
