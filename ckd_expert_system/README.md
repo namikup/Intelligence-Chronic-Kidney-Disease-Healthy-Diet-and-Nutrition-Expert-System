@@ -18,7 +18,7 @@ ckd_expert_system/
 ├── ui/
 │   ├── __init__.py
 │   ├── questions.py           # QUESTION_MAP and user input configuration
-│   └── console_ui.py          # Placeholder CLI interface
+│   └── interface_ui.py          # Placeholder  interface
 │
 ├── tests/
 │   ├── __init__.py
