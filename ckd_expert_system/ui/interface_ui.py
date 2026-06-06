@@ -3,7 +3,7 @@ console_ui.py — Command-line interface for the CKD Expert System.
 """
 
 
-class ConsoleUI:
+class InterfaceUI:#interface UI
     """Command-line interface for the CKD Expert System.
     Placeholder — implement run() to loop through QUESTION_ORDER,
     collect answers into a dict, pass to WorkingMemory, run the engine,
