@@ -20,11 +20,6 @@ ckd_expert_system/
 │   ├── questions.py           # QUESTION_MAP and user input configuration
 │   └── interface_ui.py          # Placeholder  interface
 │
-├── tests/
-│   ├── __init__.py
-│   ├── test_engine.py         # 9 unit tests covering core scenarios
-│   └── test_rules.py          # 72 parametrised tests (one per rule)
-│
 ├── main.py                    # Entry point
 ├── requirements.txt           # Dependencies (pytest)
 └── README.md                  # This file
