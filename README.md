@@ -86,4 +86,4 @@ pytest ckd_expert_system/tests/ -v
 This system is provided for **educational and research purposes only**. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of a qualified healthcare provider for any questions regarding a medical condition.
 
 ---
-🤖 *Generated with Claude Code — Professional UI/UX Refactor*
+
