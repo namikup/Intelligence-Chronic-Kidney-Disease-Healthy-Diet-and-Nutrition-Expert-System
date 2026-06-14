@@ -674,10 +674,11 @@ class DietNutriESApp(ctk.CTk):
             COLORS["primary_blue"]
         )
 
+        confidence_display = f"{res['confidence']:.1f}%" if res['confidence'] is not None else "0.0%"
         self._make_result_card(
             row1_frame, 0, 1,
             "Confidence",
-            f"{res['confidence']:.1f}%",
+            confidence_display,
             COLORS["warning_amber"]
         )
 
@@ -713,10 +714,11 @@ class DietNutriESApp(ctk.CTk):
             COLORS["text_primary"]
         )
 
+        diet_type_display = res['diet_type'].replace("_", " ") if res['diet_type'] else "N/A"
         self._make_result_card(
             row2_frame, 0, 2,
             "Diet Type",
-            res['diet_type'].replace("_", " "),
+            diet_type_display,
             COLORS["text_primary"]
         )
 
@@ -732,7 +734,10 @@ class DietNutriESApp(ctk.CTk):
             text_color=COLORS["text_secondary"]
         ).grid(row=0, column=0, padx=15, pady=(10, 5), sticky="w")
 
-        mapping_info = f"Stage {res['stage']} + {res['diet_type'].replace('_', ' ')} → Key: '{res['medical_state']}'"
+        if res['stage'] == 0:
+            mapping_info = f"No CKD detected → Key: '{res['medical_state']}'"
+        else:
+            mapping_info = f"Stage {res['stage']} + {diet_type_display} → Key: '{res['medical_state']}'"
         ctk.CTkLabel(
             state_card,
             text=mapping_info,
@@ -904,20 +909,26 @@ class DietNutriESApp(ctk.CTk):
         else:
             how_text += f"\n5. STAGE DETERMINATION: Your pattern matched the criteria for Stage {stage}.\n"
 
+        diet_type_str = res['diet_type'].replace('_', ' ') if res['diet_type'] else "N/A"
         how_text += f"\n6. DIET TYPE SELECTION:\n"
         how_text += f"Based on your BMI ({res['bmi']:.1f}, category: {res['bmi_category']}) and Activity Level ({res['activity_level']}):\n"
         how_text += f"• If BMI is Overweight/Obese → 'Calorie_Deficit' diet (reduce intake for weight loss).\n"
         how_text += f"• If BMI is Normal/Underweight → 'Calorie_Maintenance' diet (maintain stable intake).\n"
-        how_text += f"• Your result: '{res['diet_type'].replace('_', ' ')}'\n"
+        how_text += f"• Your result: '{diet_type_str}'\n"
 
         how_text += f"\n7. RECOMMENDATION RETRIEVAL:\n"
-        how_text += f"The system combines Stage {stage} + {res['diet_type'].replace('_', ' ')} to create the lookup key:\n"
-        how_text += f"Key: '{res['medical_state']}'\n"
+        if stage == 0:
+            how_text += f"For a patient with no CKD, the system bypasses stage-specific diet plans and retrieves the general prevention guidelines.\n"
+            how_text += f"Key: 'No CKD'\n"
+        else:
+            how_text += f"The system combines Stage {stage} + {diet_type_str} to create the lookup key:\n"
+            how_text += f"Key: '{res['medical_state']}'\n"
         how_text += f"This key matches an entry in the Knowledge Base recommendations dictionary,\n"
         how_text += f"which contains clinically-reviewed dietary guidelines specific to your stage and metabolic needs.\n"
 
+        confidence_str = f"{res['confidence']:.1f}%" if res['confidence'] is not None else "0.0%"
         how_text += f"\n8. CONFIDENCE & VALIDATION:\n"
-        how_text += f"Confidence: {res['confidence']:.1f}%\n"
+        how_text += f"Confidence: {confidence_str}\n"
         how_text += f"Rules Fired: {len(self.rules_fired)} out of 72\n"
         how_text += f"Risk Level: {res['risk']}"
 

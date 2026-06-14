@@ -870,36 +870,36 @@ class KnowledgeBase:
             "R51",
             condition  = lambda wm: (
                 wm.get("Final_Bmi_Category") == "Overweight" and
-                wm.get("Final_Activity") == "Low"
+                wm.get("Final_Activity") in ("Low", "Moderate", "High")
             ),
             conclusion = lambda wm: wm.set("Diet_Type", "Calorie_Deficit", "R51"),
             why = (
-                "An Overweight user with a Low activity level needs to reduce caloric "
-                "intake to achieve a healthy weight, which also reduces strain on the kidneys."
+                "An Overweight user needs to reduce caloric intake to achieve a healthy weight, "
+                "which reduces strain on the kidneys and lowers metabolic risk."
             ),
             how = (
-                "R51 fired because Final_Bmi_Category = Overweight AND Final_Activity = Low. "
+                "R51 fired because Final_Bmi_Category = Overweight. "
                 "Diet_Type has been set to Calorie_Deficit."
             ),
-            label = "Diet type: Calorie Deficit (Overweight + Low activity)"
+            label = "Diet type: Calorie Deficit (Overweight)"
         )
 
         self._add(
             "R52",
             condition  = lambda wm: (
-                wm.get("Final_Bmi_Category") == "Normal" and
+                wm.get("Final_Bmi_Category") in ("Normal", "Underweight") and
                 wm.get("Final_Activity") in ("Low", "Moderate", "High")
             ),
             conclusion = lambda wm: wm.set("Diet_Type", "Calorie_Maintenance", "R52"),
             why = (
-                "A Normal BMI user at any activity level should maintain their current "
-                "caloric intake to preserve body weight while managing CKD."
+                "A Normal or Underweight BMI user at any activity level should maintain "
+                "their caloric intake to preserve stable body weight while managing CKD."
             ),
             how = (
-                "R52 fired because Final_Bmi_Category = Normal and Final_Activity is valid. "
+                "R52 fired because Final_Bmi_Category is Normal or Underweight. "
                 "Diet_Type has been set to Calorie_Maintenance."
             ),
-            label = "Diet type: Calorie Maintenance (Normal BMI)"
+            label = "Diet type: Calorie Maintenance (Normal/Underweight)"
         )
 
         self._add(

@@ -184,8 +184,16 @@ class TestBMIAndDietType:
         wm, _, _ = run_with_facts({"weight": 90.0, "height": 1.70, "exercise_per_week": 1})
         assert wm.get("Final_Diet_Type") == "Calorie_Deficit"
 
+    def test_calorie_deficit_for_overweight_moderate_activity(self):
+        wm, _, _ = run_with_facts({"weight": 90.0, "height": 1.70, "exercise_per_week": 3})
+        assert wm.get("Final_Diet_Type") == "Calorie_Deficit"
+
     def test_calorie_maintenance_for_normal_bmi(self):
         wm, _, _ = run_with_facts({"weight": 65.0, "height": 1.75, "exercise_per_week": 3})
+        assert wm.get("Final_Diet_Type") == "Calorie_Maintenance"
+
+    def test_calorie_maintenance_for_underweight_patient(self):
+        wm, _, _ = run_with_facts({"weight": 45.0, "height": 1.70, "exercise_per_week": 3})
         assert wm.get("Final_Diet_Type") == "Calorie_Maintenance"
 
 
